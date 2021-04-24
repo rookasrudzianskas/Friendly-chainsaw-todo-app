@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import {Button, FormControl, Input, InputLabel} from "@material-ui/core";
 import Todo from "./Todo";
 import db from "./firebase";
-
+import firebase from "firebase";
 
 function App() {
     const [todos, setTodos] = useState([]);
@@ -13,7 +13,7 @@ function App() {
 
     useEffect(() => {
         //this code here fires then the app loads app.js loads
-        db.collection('todos').onSnapshot(snapshot => {
+        db.collection('todos').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
             // console.log(snapshot.docs.map(doc => doc.data()));
             setTodos(snapshot.docs.map(doc => doc.data().todo));
         })
@@ -22,16 +22,20 @@ function App() {
     const addTodo = (event) => {
         // this will fire of then we click the button
         event.preventDefault();
-        console.log('👽', 'It is working!')
-        setTodos([...todos, input]);
+
+        db.collection('todos').add({
+            todo: input,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        })
         setInput(''); // clear up the form after the submit clicking add todo button!
-        console.log(todos);
+
     }
 
 
   return (
     <div className="App">
       <h1>Hello world! 🚀</h1>
+
         <form action="">
 
             <FormControl>
