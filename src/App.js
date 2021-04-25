@@ -9,7 +9,7 @@ function App() {
     const [todos, setTodos] = useState([]);
     const [input, setInput] = useState('');
 
-    //wehen the app loads, we need to listen to the database and fetch new todos as they get added/removed
+    //when the app loads, we need to listen to the database and fetch new todos as they get added/removed
 
     useEffect(() => {
         //this code here fires then the app loads app.js loads
