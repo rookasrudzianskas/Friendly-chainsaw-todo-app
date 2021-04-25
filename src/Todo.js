@@ -1,6 +1,7 @@
 import React from "react";
 import './Todo.css';
-import {Avatar, List, ListItem, ListItemAvatar, ListItemText} from "@material-ui/core";
+import { Button, List, ListItem, ListItemAvatar, ListItemText} from "@material-ui/core";
+import db from "./firebase";
 
 const Todo = (props) => {
     return (
@@ -8,8 +9,9 @@ const Todo = (props) => {
           <ListItem>
               <ListItemAvatar>
               </ListItemAvatar>
-              <ListItemText primary={props.text} secondary="Dummy deadline 🕕"/>
+              <ListItemText primary={props.todo.todo} secondary="Dummy deadline 🕕"/>
           </ListItem>
+          <Button onClick={event => db.collection('todos').doc(props.todo.id).delete()}>☠️ DELETE ME</Button>
       </List>
     );
 }
