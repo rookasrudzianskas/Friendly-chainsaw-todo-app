@@ -1,9 +1,10 @@
 import React, {useState} from "react";
 import './Todo.css';
-import {Button, List, ListItem, ListItemAvatar, ListItemText, Modal} from "@material-ui/core";
+import {Button, List, ListItem, ListItemAvatar, ListItemText, Modal, TextField} from "@material-ui/core";
 import db from "./firebase";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { makeStyles } from '@material-ui/core/styles';
+import EditIcon from '@material-ui/icons/Edit';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -41,10 +42,11 @@ const Todo = (props) => {
                 open={open}
                 onClose={e => setOpen(false)}
                 aria-labelledby="Rokas"
+                style={{display:'flex',alignItems:'center',justifyContent:'center'}}
             >
                 <div className={classes.paper}>
                     <h1>I am modal</h1>
-                    <input placeholder={props.todo.todo} value={input} onChange={event => setInput(event.target.value)}/>
+                    <TextField placeholder={props.todo.todo} value={input} onChange={event => setInput(event.target.value)}/>
                     <Button onClick={updateTodo}> Update Todo 🪨</Button>
                 </div>
             </Modal>
@@ -54,7 +56,7 @@ const Todo = (props) => {
               </ListItemAvatar>
               <ListItemText primary={props.todo.todo} secondary="Dummy deadline 🕕"/>
           </ListItem>
-          <button onClick={e => setOpen(true)}>Edit</button>
+          <EditIcon onClick={e => setOpen(true)}>Edit</EditIcon>
           <DeleteForeverIcon onClick={event => db.collection('todos').doc(props.todo.id).delete()} />
       </List>
         </>
